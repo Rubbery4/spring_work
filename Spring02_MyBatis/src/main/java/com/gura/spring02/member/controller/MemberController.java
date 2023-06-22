@@ -50,7 +50,7 @@ public class MemberController {
 	@RequestMapping(method = RequestMethod.POST, value = "/member/update") 
 	public String update(MemberDto dto) {
 		
-		dao.update(dto);
+		service.updateMember(dto);
 		
 		return "member/update";
 	}
@@ -63,7 +63,7 @@ public class MemberController {
 	@RequestMapping("/member/delete")
 	public String delete(@RequestParam(value = "num", defaultValue = "0") int num) {
 		// MemberDao 객체를 이용해서 삭제
-		dao.delete(num);
+		service.deleteMember(num);
 		// 목록 보기로 리다이렉트 응답
 		return "redirect:/member/list";
 	}
@@ -73,7 +73,7 @@ public class MemberController {
 	@RequestMapping("/member/insert")
 	public String insert(MemberDto dto) {
 		// MemberDao 객체를 이용하여 DB에 저장
-		dao.insert(dto);
+		service.addMember(dto);
 		// view page 로 forward 이동해서 응답
 		return "member/insert";
 	}
@@ -88,12 +88,11 @@ public class MemberController {
 	
 	// 회원 목록 보기 요청 처리
 	@RequestMapping("/member/list")
-	public String list(HttpServletRequest request) {
+	public ModelAndView list(ModelAndView mView) {
 		// 회원목록을 얻어와서
-		List<MemberDto> list = dao.getList();
-		//request scope 에 담고
-		request.setAttribute("list", list);
+		service.getMemberList(mView);
+		mView.setViewName("member/list");
 		// /WEB-INF/views/member/list.jsp 페이지로 forward 이동해서 응답
-		return "member/list";
+		return mView;
 	}
 }
