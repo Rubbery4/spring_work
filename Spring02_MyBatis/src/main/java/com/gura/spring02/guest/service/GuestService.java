@@ -9,6 +9,6 @@ public interface GuestService {
 	public void addGuest(GuestDto dto);
 	public void updateGuest(GuestDto dto);
 	public void deleteGuest(GuestDto dto);
-	public void getGuestInfo(ModelAndView mview, int num);
+	public void getGuestInfo(ModelAndView mView, int num);
 	public void getGuestList(ModelAndView mView);
 }

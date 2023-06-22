@@ -15,22 +15,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring02.member.dao.MemberDao;
 import com.gura.spring02.member.dto.MemberDto;
+import com.gura.spring02.member.service.MemberService;
 
 @Controller
 public class MemberController {
 	@Autowired
-	private MemberDao dao;
+	private MemberService service;
 	
 	//회원 수정폼 요청 처리
 	@RequestMapping("/member/updateform")
 	public ModelAndView updateform(ModelAndView mView, int num) {
 		// 수정할 회원의 정보를 얻어온다.
-		MemberDto dto = dao.getData(num);
 		/*
 		 * 수정할 회원의 정보를 ModelAndView 객체의 addObject(key, value) 메소드를 이용해서 담는다.
 		 * ModelAndView 객체에 담은 값은 결국 HttpServletRequest 객체에 담긴다( request scope 에 담긴다)
 		 */
-		mView.addObject("dto", dto);
+		service.getMember(mView, num);
 		// view page 의 위치도 ModelAndView 객체에 담아서 리턴해야 한다.
 		mView.setViewName("member/updateform");
 		// 모델(data) 와 view page 의 정보가 모두 담긴 ModelAndView 객체를 리턴해주면
