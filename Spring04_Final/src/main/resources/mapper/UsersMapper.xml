@@ -4,33 +4,29 @@
 <mapper namespace="users">
 
 		<insert id="insert" parameterType="usersDto">
-		insert into users
+		INSERT INTO users
 		(id, pwd, email, regdate)
-		values (#{id}, #{pwd}, #{email}, sysdate)
+		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
-
-	<select id="selectOne" parameterType="string" resultType="usersDto">
-		select id, pwd, email, regdate
-		from users
-		where id=#{id}
+	<select id="getData" parameterType="string" 
+				resultType="usersDto">
+		SELECT id, pwd, profile, email, regdate
+		FROM users
+		WHERE id=#{id}
 	</select>
-	
 	<update id="updatePwd" parameterType="usersDto">
-		update users
+		UPDATE users
 		SET pwd=#{newPwd}
-		where id = #{id}
+		WHERE id=#{id}
 	</update>
-	
 	<update id="update" parameterType="usersDto">
-		update users
-		set email=#{email}, profile=#{profile}
-		where id = #{id}
+		UPDATE users
+		SET email=#{email}, profile=#{profile}
+		WHERE id=#{id}
 	</update>
-	
 	<delete id="delete" parameterType="string">
-		delete from users
-		where id=#{id}
-	
+		DELETE FROM users
+		WHERE id=#{id}
 	</delete>
 
 </mapper>
