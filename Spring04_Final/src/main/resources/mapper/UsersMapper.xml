@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+
+		<insert id="insert" parameterType="usersDto">
+		insert into users
+		(id, pwd, email, regdate)
+		values (#{id}, #{pwd}, #{email}, sysdate)
+	</insert>
+
+	<select id="selectOne" parameterType="string" resultType="usersDto">
+		select id, pwd, email, regdate
+		from users
+		where id=#{id}
+	</select>
+	
+	<update id="updatePwd" parameterType="usersDto">
+		update users
+		SET pwd=#{newPwd}
+		where id = #{id}
+	</update>
+	
+	<update id="update" parameterType="usersDto">
+		update users
+		set email=#{email}, profile=#{profile}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from users
+		where id=#{id}
+	
+	</delete>
+
+</mapper>
