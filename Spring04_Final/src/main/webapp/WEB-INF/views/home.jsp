@@ -23,6 +23,12 @@
 			</c:otherwise>
 		</c:choose>
 		
+		<h1>인덱스 페이지 입니다</h1>
+		<ul>
+			<li><a href="file/list">자료실 목록보기</a></li>
+		</ul>
+		
+		
 		<h2>공지사항</h2>
 		<ul>
 			<c:forEach var="tmp" items="${requestScope.noticeList }">

@@ -1,13 +1,17 @@
 package com.gura.spring04.users.controller;
 
 import java.net.URLEncoder;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring04.users.dto.UsersDto;
@@ -19,6 +23,72 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 	
+	//회원 탈퇴 요청 처리
+	@RequestMapping("/users/delete")
+	public ModelAndView delete(HttpSession session, ModelAndView mView) {
+		service.deleteUser(session, mView);
+		
+		mView.setViewName("users/delete");
+		return mView;
+	}
+	
+	
+	@RequestMapping(value = "/users/update", method=RequestMethod.POST)
+	public ModelAndView update(UsersDto dto, HttpSession session, ModelAndView mView) {
+		service.updateUser(dto, session);
+		// 개인정보 보기로 리다이렉트 이동
+		mView.setViewName("redirect:/users/info");
+		return mView;
+	}
+	
+	@RequestMapping(value = "/users/profile_upload", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> profileUpload(HttpServletRequest request, MultipartFile image) {
+		// 서비스를 이용해서 이미지를 upload 폴더에 저장하고 리턴되는 Map 을 리턴해서 json 문자열 응답하기
+		return service.saveProfileImage(request, image);
+	}
+	
+	
+	@RequestMapping("users/updateform")
+	public ModelAndView updateform(HttpSession session, ModelAndView mView) {
+		service.getInfo(session, mView);
+		mView.setViewName("users/updateform");
+		return mView;
+	}
+	
+	// 비밀번호 수정 요청 처리
+	@RequestMapping("/users/pwd_update")
+	public ModelAndView pwdUpdate(UsersDto dto, ModelAndView mView, HttpSession session) {
+		// 서비스에 필요한 객체의 참조값을 전달해서 비밀번호 수정 로직을 처리한다.
+		service.updateUserPwd(session, dto, mView);
+		// view page 로 forward 이동해서 작업 결과를 응답한다.
+		mView.setViewName("users/pwd_update");
+		return mView;
+		
+	}
+	
+	// 비밀번호 수정 폼 요청 처리
+	@RequestMapping("/users/pwd_updateform")
+	public String pwdUpdateForm() {
+		return "users/pwd_updateform";
+	}
+	
+	
+	// 개인정보 보기 요청 처리
+	@RequestMapping("/users/info")
+	public ModelAndView info(HttpSession session, ModelAndView mView) {
+		service.getInfo(session, mView);
+		mView.setViewName("users/info");
+		return mView;
+	}
+
+	
+	@RequestMapping("/users/logout")
+	public String logout (HttpSession session) {
+		// 세션에서 id 라는 키값으로 저장된 값 삭제
+		session.removeAttribute("id");
+		return "users/logout";
+	}
 	// 로그인 요청 처리
 	@RequestMapping("/users/login")
 	public ModelAndView login(ModelAndView mView, UsersDto dto, String url, HttpSession session) {
