@@ -156,6 +156,7 @@ public class FileServiceImpl implements FileService{
 	public void getFileData(int num, ModelAndView mView) {
 		// 다운로드 할 파일의 정보를 얻어와서
 		FileDto dto = dao.getData(num);
+		
 		// ModelAndView 객체에 담아준다
 		mView.addObject("dto", dto);
 		

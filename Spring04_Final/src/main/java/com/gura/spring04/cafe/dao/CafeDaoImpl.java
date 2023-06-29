@@ -10,7 +10,7 @@ import com.gura.spring04.cafe.dto.CafeDto;
 
 @Repository
 public class CafeDaoImpl implements CafeDao{
-
+	
 	@Autowired
 	private SqlSession session;
 	
@@ -22,7 +22,7 @@ public class CafeDaoImpl implements CafeDao{
 
 	@Override
 	public int getCount(CafeDto dto) {
-
+		
 		return session.selectOne("cafe.getCount", dto);
 	}
 
@@ -33,19 +33,19 @@ public class CafeDaoImpl implements CafeDao{
 
 	@Override
 	public CafeDto getData(int num) {
-
-		return session.selectOne("cafe.getDate", num);
+		
+		return session.selectOne("cafe.getData", num);
 	}
 
 	@Override
 	public CafeDto getData(CafeDto dto) {
-
-		return session.selectOne("cafe.getDate2", dto);
+		
+		return session.selectOne("cafe.getData2", dto);
 	}
 
 	@Override
 	public void addViewCount(int num) {
-		session.selectOne("cafe.addViewCount", num);
+		session.update("cafe.addViewCount", num);
 	}
 
 	@Override
