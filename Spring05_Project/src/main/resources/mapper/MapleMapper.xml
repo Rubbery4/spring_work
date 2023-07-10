@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="maple">
+	<select id="getList" parameterType="mapleDto" resultType="mapleDto">
+		SELECT *
+		FROM maple
+		ORDER BY num ASC
+	</select>
+	<insert id="insert" parameterType="mapleDto">
+		INSERT INTO maple
+		(num, id, type, enhance, rating, falseCount, meso, break1, regdate)
+		VALUES(maple_seq.NEXTVAL, #{id}, #{type}, 0, 0, 0, 10000000000, 0, SYSDATE)
+	</insert>
+	<select id="getData" parameterType="mapleDto" 
+				resultType="mapleDto">
+		SELECT *
+		FROM maple
+		WHERE num=#{num}
+	</select>
+	<update id="update" parameterType="mapleDto">
+		UPDATE maple
+		SET enhance=#{enhance}, rating=#{rating}, falseCount=#{falseCount}, meso=#{meso}, break1=#{break1}
+		WHERE num=#{num}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM maple
+		WHERE num=#{num}
+	</delete>
+
+</mapper>

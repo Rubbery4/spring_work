@@ -248,7 +248,7 @@
    <script>
       
       //클라이언트가 로그인 했는지 여부
-      let isLogin=${ not empty id };
+      let isLogin= ${ not empty id };
       
       document.querySelector(".insert-form")
          .addEventListener("submit", function(e){
@@ -343,6 +343,7 @@
             updateLinks[i].addEventListener("click", function(){
                //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
                const num=this.getAttribute("data-num"); //댓글의 글번호
+               // 숨겨진 댓글 수정폼을 보이도록 한다,
                document.querySelector("#updateForm"+num).style.display="block";
                
             });
